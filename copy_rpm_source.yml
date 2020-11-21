@@ -1,0 +1,18 @@
+---
+- name: Copy File
+  copy:
+    src: /repos/shared_rhel75.repo
+    dest: /etc/yum.repos.d/
+    remote_src: no
+- name: Mount and bind a volume
+  mount:
+    src: openfiler2:/mnt/vgiso/lviso/iso/1-ISO/02-RHEL/rhel-server-7.5-x86_64-dvd/
+    path: /repos/rhel75
+    opts: _netdev,rw,sync,hard,intr
+    fstype: nfs
+    state: mounted
+    fstab: /etc/fstab
+- name: ensure a directory exists
+  file:
+    path: /repos/rhel75
+    state: directory
